@@ -1,6 +1,9 @@
 import pygame
 import math
 
+SCREEN_HEIGHT = 1280 // 2 
+SCREEN_WIDTH = 720 // 2
+
 class Shot(pygame.sprite.Sprite):
     def __init__(self, x, y, dx, dy):
         pygame.sprite.Sprite.__init__(self)
@@ -17,7 +20,7 @@ class Shot(pygame.sprite.Sprite):
         self.y = y
 
     def update(self):
-        if (self.rect.x > 1280 or self.rect.y > 720):
+        if (self.rect.x > SCREEN_WIDTH or self.rect.y > SCREEN_HEIGHT):
             self.kill()
         
         self.x = self.x + self.dx
@@ -28,10 +31,11 @@ class Shot(pygame.sprite.Sprite):
 
 
 class LangLogo(pygame.sprite.Sprite):
-    def __init__(self, x, y, shots):
+    def __init__(self, logo_file, x, y, shots):
         pygame.sprite.Sprite.__init__(self)
-        self.original_image = pygame.image.load('csharp-logo.png')
-        #self.original_image = pygame.transform.smoothscale_by(pygame.image.load("img.png").convert(), 0.3)
+        #self.original_image = pygame.image.load('csharp-logo.png')
+        self.original_image = pygame.transform.smoothscale_by(
+            pygame.image.load(logo_file).convert_alpha(), 0.2)
         #self.original_image.set_colorkey(self.original_image.get_at((0, 0)))
         self.image = self.original_image
         self.rect = self.image.get_rect(center = (x, y))
@@ -82,7 +86,8 @@ class LangLogo(pygame.sprite.Sprite):
 
 # pygame setup
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+pygame.display.set_caption('CODECON SUMMIT 2025')
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 running = True
 dt = 0
@@ -92,8 +97,8 @@ player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 logos = pygame.sprite.Group()
 shots = pygame.sprite.Group()
 
-logo = LangLogo(200, 200, shots)
-logos.add(logo)
+lang = LangLogo("csharp-logo.png", 200, 200, shots)
+logos.add(lang)
 
 while running:
     # poll for events
