@@ -5,6 +5,7 @@ from threading import Thread
 import multiprocessing
 from time import sleep
 import random
+import io
 
 SCREEN_HEIGHT = 720 // 1
 SCREEN_WIDTH = 1280 // 1
@@ -82,8 +83,6 @@ class Shot(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface([10, 10]) 
         self.image.fill("black")
-        #self.image.set_colorkey(COLOR)
-        #pygame.draw.rect(self.image, "black", pygame.Rect(0, 0, 10, 10))
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.velocity = 10
@@ -107,11 +106,6 @@ class LangLogo(pygame.sprite.Sprite):
     
     def __init__(self, id, logo, x, y, shots):
         pygame.sprite.Sprite.__init__(self)
-        #self.original_image = pygame.image.load('csharp-logo.png')
-        #self.original_image = pygame.transform.smoothscale_by(
-        #    pygame.image.load(logo_file).convert_alpha(), 0.2)
-        #self.original_image.set_colorkey(self.original_image.get_at((0, 0)))
-        #self.original_image = pygame.image.load('csharp-logo.png')
         self.original_image = SpritesSheet().image_at(sprites[logo])
         self.image = self.original_image.copy()
         self.rect = self.image.get_rect(center = (x, y))
@@ -296,14 +290,14 @@ def add_random_player():
 Thread(target = start_emitting_events).start()
 Thread(target = add_random_player).start()
 
+
+bg = pygame.image.load('backgrounds/12984081_5130888.svg')
+
 while True:
-    # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
     events = pygame.event.get()
     user_events = [event for event in events if event.type == pygame.USEREVENT]
     for event in events:
         if event.type == pygame.USEREVENT and event.event == USER_EVENT_JOIN:
-            #print(event)
             x = random.randint(0, SCREEN_WIDTH - 150)
             y = random.randint(0, SCREEN_HEIGHT - 150)
             angle = random.randint(0, 359)
@@ -318,7 +312,8 @@ while True:
             exit()
     
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("white")
+    #screen.fill("white")
+    screen.blit(bg, (0, 0))
 
     #screen.blit(star.image, star.rect)
     #star.update()
@@ -333,14 +328,11 @@ while True:
     shots.draw(screen)
     logos.draw(screen)
     
-
     # flip() the display to put your work on screen
     pygame.display.flip()
 
     # limits FPS to 60
-    # dt is delta time in seconds since last frame, used for framerate-
-    # independent physics.
-    #dt = clock.tick(60) / 1000
-    clock.tick(60) / 1000
+    # dt is delta time in seconds since last frame
+    dt = clock.tick(60) / 1000
 
 pygame.quit()
