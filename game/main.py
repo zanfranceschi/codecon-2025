@@ -70,9 +70,10 @@ class SpritesSheet(object):
         self.sheet = pygame.image.load("spritessheet.png").convert()
         
     def image_at(self, rectangle):
-        #rectangle = (x, y, w, h)
         rect = pygame.Rect(rectangle)
         image = pygame.Surface(rect.size).convert()
+        colorkey = (255, 255, 255, 255)
+        image.set_colorkey(colorkey)
         image.blit(self.sheet, (0, 0), rect)
         return image
 
@@ -120,13 +121,8 @@ class LangLogo(pygame.sprite.Sprite):
         self.angle = 0
         self.id = id
 
-    def draw_health_bar(self, surf, pos, size, borderC, backC, healthC, progress):
-        pygame.draw.rect(surf, backC, (*pos, *size))
-        pygame.draw.rect(surf, borderC, (*pos, *size), 1)
-        innerPos  = (pos[0]+1, pos[1]+1)
-        innerSize = ((size[0]-2) * progress, size[1]-2)
-        rect = (round(innerPos[0]), round(innerPos[1]), round(innerSize[0]), round(innerSize[1]))
-        pygame.draw.rect(surf, healthC, rect)
+    def update_mask(self):
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self, events):
         keys = pygame.key.get_pressed()
@@ -140,6 +136,8 @@ class LangLogo(pygame.sprite.Sprite):
         self.maybe_rotate_from_events(player_events)
         self.maybe_shoot_from_events(player_events)
         self.maybe_limit_movement()
+
+        self.update_mask()
         
         if self.hp < 1:
             self.kill()
@@ -227,7 +225,7 @@ class LangLogo(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(center = self.rect.center)
 
     def maybe_collide(self):
-        collided_sprites = pygame.sprite.spritecollide(self, self.shots, False)
+        collided_sprites = pygame.sprite.spritecollide(self, self.shots, False, pygame.sprite.collide_mask)
         if (collided_sprites):
             for collided_sprite in collided_sprites:
                 if (not collided_sprite.shooter_id == self.id):
@@ -293,7 +291,7 @@ def add_random_player():
     while True:
         event = pygame.event.Event(pygame.USEREVENT, player_id=2, event=USER_EVENT_JOIN)
         pygame.event.post(event)
-        sleep(5)
+        sleep(60)
         
 Thread(target = start_emitting_events).start()
 Thread(target = add_random_player).start()
@@ -306,8 +304,12 @@ while True:
     for event in events:
         if event.type == pygame.USEREVENT and event.event == USER_EVENT_JOIN:
             #print(event)
+            x = random.randint(0, SCREEN_WIDTH - 150)
+            y = random.randint(0, SCREEN_HEIGHT - 150)
+            angle = random.randint(0, 359)
             logo_img = random.choice(list(sprites))
-            lang = LangLogo(event.player_id, logo_img, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, shots)
+            lang = LangLogo(event.player_id, logo_img, x, y, shots)
+            lang.angle = angle
             texto = Text(screen, lang)
             logos.add(lang)
             logos.add(texto)
@@ -328,8 +330,9 @@ while True:
     shots.update()
     logos.update(user_events)
     
-    logos.draw(screen)
     shots.draw(screen)
+    logos.draw(screen)
+    
 
     # flip() the display to put your work on screen
     pygame.display.flip()
