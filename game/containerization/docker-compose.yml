@@ -1,0 +1,13 @@
+services:
+  db:
+    image: rabbitmq:4.0.7-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=123
+    ports:
+      - 127.0.0.100:15672:15672
+      - 127.0.0.100:5672:5672
+
+networks:
+  default:
+    driver: bridge
