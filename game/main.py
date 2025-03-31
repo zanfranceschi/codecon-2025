@@ -27,8 +27,8 @@ shots = pygame.sprite.Group()
 lang = sprites.LangLogo(1, "logo-c#", 200, 200, shots)
 lang.angle = 0
 texto = sprites.Text(screen, lang)
-logos.add(lang)
-logos.add(texto)
+#logos.add(lang)
+#logos.add(texto)
 
 Thread(target = functions.start_emitting_events).start()
 Thread(target = functions.add_random_player).start()
@@ -43,13 +43,11 @@ while True:
     for event in events:
         if event.type == pygame.WINDOWRESIZED:
             configs.SCREEN_WIDTH, configs.SCREEN_HEIGHT = screen.get_width(), screen.get_height()
-        if event.type == pygame.USEREVENT and event.event == configs.USER_EVENT_JOIN:
+        if event.type == pygame.USEREVENT and event.event == configs.USER_EVENT_JOIN and event.lang is not None:
             x = random.randint(0, configs.SCREEN_WIDTH - 150)
             y = random.randint(0, configs.SCREEN_HEIGHT - 150)
-            angle = random.randint(0, 359)
-            logo_img = random.choice(list(sprites.sprites))
+            logo_img = f"logo-{event.lang}"
             lang = sprites.LangLogo(event.player_id, logo_img, x, y, shots)
-            lang.angle = angle
             texto = sprites.Text(screen, lang)
             logos.add(lang)
             logos.add(texto)

@@ -1,5 +1,5 @@
 services:
-  db:
+  rabbitmq:
     image: rabbitmq:4.0.7-management
     environment:
       - RABBITMQ_DEFAULT_USER=guest
