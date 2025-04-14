@@ -1,0 +1,8 @@
+POST http://localhost:8000/events
+Content-Type: application/json
+
+{
+    "player_id": "zan",
+    "event": 1,
+    "lang": "clojure"
+}

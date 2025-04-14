@@ -1,85 +1,81 @@
-import pika
-import json
-from typing import Union
-
-import pika.connection
-import pika.exceptions
-
-from fastapi import FastAPI
+import os
+from typing import AsyncGenerator
+import aio_pika
+from aio_pika.abc import AbstractConnection, AbstractChannel
+from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+import json
 
 class EventRequest(BaseModel):
     event: int
     player_id: str
     lang: str | None = None
 
-class MessageBroker(object):
-    
+class RabbitMQConfig:
     EXCHANGE_NAME = "game.events"
     QUEUE_NAME = "game.events.graphic-unit"
-
-    def __init__(self):
-        self.credentials = pika.PlainCredentials('guest', '123')
-        self.connection_parameters = pika.ConnectionParameters(
-            host="127.0.0.100",
-            port=5672,
-            credentials=self.credentials)
-        self.connection = None
-        self.channel = None
-
-    def _ensure_is_connected(self):
-        if not self.connection or self.connection.is_closed:
-            self.connection = pika.BlockingConnection(self.connection_parameters)
-            self.channel = self.connection.channel()
-        
-        if self.channel is None or self.channel.is_closed:
-            self.channel = self.connection.channel()
-   
-    def _ensure_objects(self):
-        self.get_channel().exchange_declare(
-            exchange=self.EXCHANGE_NAME,
-            exchange_type="fanout")
-        self.get_channel().queue_declare(
-            queue=self.QUEUE_NAME)
-        self.get_channel().queue_bind(
-            exchange=self.EXCHANGE_NAME,
-            queue=self.QUEUE_NAME)
     
-    def get_connection(self):
-        self._ensure_is_connected()
-        return self.connection
+    @classmethod
+    def get_connection_url(cls) -> str:
+        return f"amqp://{os.getenv('RABBITMQ_USER', 'guest')}:{os.getenv('RABBITMQ_PASSWORD', '123')}@{os.getenv('RABBITMQ_HOST', 'localhost')}:{os.getenv('RABBITMQ_PORT', 5672)}"
 
-    def get_channel(self):
-        self._ensure_is_connected()
-        return self.channel
-    
-    def publish_message(self, message):
-        try:
-            self.get_channel().basic_publish(
-                exchange=self.EXCHANGE_NAME,
-                routing_key='',
-                body=json.dumps(message))
-        except pika.exceptions.ChannelClosedByBroker as ex:
-            if "NOT_FOUND" in str(ex):
-                self._ensure_objects()
-                self.get_channel().basic_publish(
-                    exchange=self.EXCHANGE_NAME,
-                    routing_key='',
-                    body=json.dumps(message))
-            else:
-                raise ex
+async def get_rabbitmq_connection() -> AsyncGenerator[AbstractConnection, None]:
+    connection = await aio_pika.connect_robust(
+        RabbitMQConfig.get_connection_url(),
+        timeout=5,
+        heartbeat=30
+    )
+    try:
+        yield connection
+    finally:
+        await connection.close()
+
+async def get_rabbitmq_channel(connection: AbstractConnection = Depends(get_rabbitmq_connection)) -> AsyncGenerator[AbstractChannel, None]:
+    async with connection.channel() as channel:
+        # Declare exchange and queue
+        exchange = await channel.declare_exchange(
+            RabbitMQConfig.EXCHANGE_NAME,
+            aio_pika.ExchangeType.FANOUT,
+            durable=True
+        )
+        queue = await channel.declare_queue(
+            RabbitMQConfig.QUEUE_NAME,
+            durable=True
+        )
+        await queue.bind(exchange)
+        yield channel
 
 app = FastAPI()
 
-msg_broker = MessageBroker()
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
-def read_root(event: int):
-    event = {"player_id": 1, "event": event}
-    msg_broker.publish_message(event)
+async def read_root(event: int, channel: AbstractChannel = Depends(get_rabbitmq_channel)):
+    message = {"player_id": 1, "event": event}
+    await channel.default_exchange.publish(
+        aio_pika.Message(
+            body=json.dumps(message).encode(),
+            delivery_mode=aio_pika.DeliveryMode.PERSISTENT
+        ),
+        routing_key=RabbitMQConfig.QUEUE_NAME
+    )
     return {"Hello": "World"}
 
 @app.post("/events", status_code=202)
-def events(event_request: EventRequest):
-    msg_broker.publish_message(event_request.model_dump())
+async def events(event_request: EventRequest, channel: AbstractChannel = Depends(get_rabbitmq_channel)):
+    await channel.default_exchange.publish(
+        aio_pika.Message(
+            body=json.dumps(event_request.model_dump()).encode(),
+            delivery_mode=aio_pika.DeliveryMode.PERSISTENT
+        ),
+        routing_key=RabbitMQConfig.QUEUE_NAME
+    )
     return {"msg": "event received!"}
