@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joystick Controller</title>
     <style>
+        body {
+            background-color: #fff;
+            padding: 20px;
+        }
+
         #joystick-container {
             width: 200px;
             height: 200px;
@@ -28,7 +32,13 @@
 
         #buttons {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #vertical-buttons {
+            display: flex;
+            flex-direction: column;
             gap: 15px;
         }
 
@@ -56,22 +66,30 @@
             margin-top: 20px;
             font-family: monospace;
         }
+
+        .controller-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
     </style>
 </head>
 
 <body>
-    <div style="display: flex; gap: 40px; align-items: center;">
+    <div class="controller-container">
+        <!-- Botões A e B -->
+        <div id="vertical-buttons">
+            <button class="joy-button" data-btn="A">↻</button>
+            <button class="joy-button" data-btn="B">↺</button>
+        </div>
+
         <!-- Joystick -->
         <div id="joystick-container">
             <div id="joystick"></div>
         </div>
 
-        <!-- Botões -->
-        <div id="buttons">
-            <button class="joy-button" data-btn="A">A</button>
-            <button class="joy-button" data-btn="B">B</button>
-            <button class="joy-button" data-btn="C">C</button>
-        </div>
+        <!-- Botão C -->
+        <button class="joy-button" data-btn="C" id="shoot">✴</button>
     </div>
 
     <p id="output">X: 0 | Y: 0</p>
@@ -79,6 +97,4 @@
 
 </body>
 <script src="joystick.js"></script>
-</script>
-
 </html>

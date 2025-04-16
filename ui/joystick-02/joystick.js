@@ -1,6 +1,7 @@
 const container = document.getElementById("joystick-container");
 const joystick = document.getElementById("joystick");
 const output = document.getElementById("output");
+const buttonShoot = document.getElementById("shoot");
 const buttonOutput = document.getElementById("button-output");
 
 const center = 100;
@@ -40,11 +41,32 @@ function moveJoystick(x, y) {
 
     output.textContent = `X: ${(joyX / maxDistance).toFixed(2)} | Y: ${(joyY / maxDistance).toFixed(2)}`;
 
+    const joyXInt = Math.round(joyX / maxDistance);
+    const joyYInt = Math.round(joyY / maxDistance);
+    
+    //console.log("joyXInt", joyXInt, "joyYInt", joyYInt);
+
+    var cardinalDirection = "";
+
+    if (joyXInt > 0) {
+        cardinalDirection = "right";
+    } else if (joyXInt < 0) {
+        cardinalDirection = "left";
+    }
+
+    if (joyYInt > 0) {
+        cardinalDirection += "down";
+    } else if (joyYInt < 0) {
+        cardinalDirection += "up"; 
+    }
+    
+    /*
     sendToBackend({
         player_id: "zan",
         event: 1,
         lang: "clojure"
     });
+    */
 }
 
 function resetJoystick() {
@@ -61,14 +83,36 @@ container.addEventListener("mousedown", (e) => {
     };
 });
 
+buttonShoot.addEventListener("touchstart", () => {
+    console.log("shoot");
+});
+
 container.addEventListener("touchstart", (e) => {
-    document.ontouchmove = (e) => moveJoystick(...Object.values(getPosition(e)));
+    console.log("start sending position");
+});
+
+container.addEventListener("touchend", (e) => {
+    console.log("end sending position");
+    resetJoystick();
+});
+
+container.addEventListener("touchmove", (e) => {
+    moveJoystick(...Object.values(getPosition(e)));
+    console.log("change position", Object.values(getPosition(e)));
+});
+
+/*
+container.addEventListener("touchstart", (e) => {
+    document.ontouchmove = (e) => {
+        console.log("touchmove");
+        moveJoystick(...Object.values(getPosition(e)));
+    };
     document.ontouchend = () => {
         document.ontouchmove = null;
         resetJoystick();
     };
 });
-
+*/
 // Botões
 document.querySelectorAll(".joy-button").forEach((btn) => {
     btn.addEventListener("click", () => {
