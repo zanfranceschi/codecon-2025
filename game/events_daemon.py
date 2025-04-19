@@ -15,9 +15,9 @@ def _start_consuming():
 
     channel = connection.channel()
 
-    channel.exchange_declare(exchange=exchange_name, exchange_type="fanout")
+    channel.exchange_declare(exchange=exchange_name, exchange_type="fanout", durable=True)
 
-    channel.queue_declare(queue=queue_name)
+    channel.queue_declare(queue=queue_name, durable=True)
 
     channel.queue_bind(exchange=exchange_name, queue=queue_name)
 

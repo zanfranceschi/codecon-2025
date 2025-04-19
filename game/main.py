@@ -37,6 +37,8 @@ events_daemon.start_async()
 
 bg = pygame.image.load('images/background-01.jpg')
 
+players = []
+
 while True:
     events = pygame.event.get()
     configs.user_events = [event for event in events if event.type == pygame.USEREVENT]
@@ -44,13 +46,15 @@ while True:
         if event.type == pygame.WINDOWRESIZED:
             configs.SCREEN_WIDTH, configs.SCREEN_HEIGHT = screen.get_width(), screen.get_height()
         if event.type == pygame.USEREVENT and event.event == configs.USER_EVENT_JOIN and event.lang is not None:
-            x = random.randint(0, configs.SCREEN_WIDTH - 150)
-            y = random.randint(0, configs.SCREEN_HEIGHT - 150)
-            logo_img = f"logo-{event.lang}"
-            lang = sprites.LangLogo(event.player_id, logo_img, x, y, shots)
-            texto = sprites.Text(screen, lang)
-            logos.add(lang)
-            logos.add(texto)
+            if event.player_id not in players:
+                players.append(event.player_id)
+                x = random.randint(0, configs.SCREEN_WIDTH - 150)
+                y = random.randint(0, configs.SCREEN_HEIGHT - 150)
+                logo_img = f"logo-{event.lang}"
+                lang = sprites.LangLogo(event.player_id, logo_img, x, y, shots)
+                texto = sprites.Text(screen, lang)
+                logos.add(lang)
+                logos.add(texto)
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()

@@ -2,7 +2,28 @@ POST http://localhost:8000/events
 Content-Type: application/json
 
 {
+    "player_id": "fran",
+    "event": 20,
+    "lang": "c#"
+}
+
+###
+
+POST http://localhost:8000/events
+Content-Type: application/json
+
+{
     "player_id": "zan",
-    "event": 1,
+    "event": 19
+}
+
+###
+
+POST http://localhost:8000/events
+Content-Type: application/json
+
+{
+    "player_id": "zan",
+    "event": 13,
     "lang": "clojure"
 }

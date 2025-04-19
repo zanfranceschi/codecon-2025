@@ -1,64 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joystick Menu</title>
+    <title>Joystick Controller</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            background-color: #fff;
+            padding: 20px;
+        }
+
+        #joystick-container {
+            width: 200px;
+            height: 200px;
+            background: #eee;
+            border-radius: 50%;
+            position: relative;
+            touch-action: none;
+        }
+
+        #joystick {
+            width: 60px;
+            height: 60px;
+            background: #444;
+            border-radius: 50%;
+            position: absolute;
+            left: 70px;
+            top: 70px;
+            transition: 0.1s;
+        }
+
+        #buttons {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #f0f2f5;
+            gap: 15px;
         }
-        .container {
-            text-align: center;
-            padding: 2rem;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 2rem;
-        }
-        .menu {
+
+        #vertical-buttons {
             display: flex;
-            gap: 2rem;
-            margin-top: 2rem;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: -60px;
         }
-        .menu-item {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            text-decoration: none;
-            color: #333;
-            transition: transform 0.2s, box-shadow 0.2s;
+
+        .joy-button {
+            width: 60px;
+            height: 60px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50%;
+            background: #ff5252;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.1s;
         }
-        .menu-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+
+        .joy-button:active {
+            transform: scale(0.9);
+            background: #e53935;
         }
-        .menu-item h2 {
-            margin: 0;
-            font-size: 1.5rem;
+
+        .controller-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .shoot-container {
+            margin-left: auto;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Joystick Controls</h1>
-        <div class="menu">
-            <a href="joystick-01/index.html" class="menu-item">
-                <h2>Joystick 01</h2>
-            </a>
-            <a href="joystick-02/index.html" class="menu-item">
-                <h2>Joystick 02</h2>
-            </a>
+    <div class="controller-container">
+        <!-- Botões A e B -->
+        <div id="vertical-buttons">
+            <button class="joy-button" id="rotate-cw">↻</button>
+            <button class="joy-button" id="rotate-ccw">↺</button>
+        </div>
+
+        <!-- Joystick -->
+        <div id="joystick-container">
+            <div id="joystick"></div>
+        </div>
+
+        <!-- Botão C -->
+        <div class="shoot-container">
+            <button class="joy-button" id="shoot">✴</button>
         </div>
     </div>
+
 </body>
+<script src="joystick.js"></script>
 </html>
