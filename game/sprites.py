@@ -81,7 +81,7 @@ class Shot(pygame.sprite.Sprite):
 
 class LangLogo(pygame.sprite.Sprite):
     
-    def __init__(self, id, logo, x, y, shots):
+    def __init__(self, id, logo, x, y, shots, death_declaration):
         pygame.sprite.Sprite.__init__(self)
         self.original_image = SpritesSheet().image_at(sprites[logo])
         self.image = self.original_image.copy()
@@ -95,6 +95,7 @@ class LangLogo(pygame.sprite.Sprite):
         self.moving_direction = None
         self.is_rotating = False
         self.rotating_direction = None
+        self.death_declaration = death_declaration
 
     def update_mask(self):
         self.mask = pygame.mask.from_surface(self.image)
@@ -120,6 +121,7 @@ class LangLogo(pygame.sprite.Sprite):
         self.update_mask()
         
         if self.hp < 1:
+            self.death_declaration.declare_death(self.id)
             self.kill()
     
     def maybe_stop_moving(self, events):

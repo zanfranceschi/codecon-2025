@@ -11,7 +11,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def start_consuming():
-    credentials = pika.PlainCredentials('guest', '123')
+    credentials = pika.PlainCredentials('guest', 'guest')
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host="127.0.0.100", port=5672, credentials=credentials),
     )

@@ -4,8 +4,7 @@ services:
     container_name: codecon-rabbitmq
     environment:
       - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=123
-    network_mode: host
+      - RABBITMQ_DEFAULT_PASS=guest
     expose:
       - "15672"
       - "5672"
@@ -13,37 +12,50 @@ services:
       - "15672:15672"
       - "5672:5672"
 
-  nginx:
+  codecon-ui:
     image: codecon-ui
     container_name: codecon-ui
     build:
       context: ../ui
       dockerfile: Dockerfile
-    network_mode: host
     expose:
-      - "80"
+      - "8001"
     ports:
-      - "80:80"
+      - "8001:8000"
     depends_on:
       - codecon-api
 
   codecon-api:
+    image: codecon-api
     container_name: codecon-api
     build:
       context: ../api
       dockerfile: Dockerfile
     environment:
-      - RABBITMQ_HOST=localhost
+      - RABBITMQ_HOST=codecon-rabbitmq
       - RABBITMQ_USER=guest
-      - RABBITMQ_PASSWORD=123
+      - RABBITMQ_PASSWORD=guest
       - RABBITMQ_PORT=5672
-    network_mode: host
+    expose:
+      - "8002"
+    ports:
+      - "8002:8000"
+    depends_on:
+      - rabbitmq
+
+  codecon-routing:
+    image: codecon-routing
+    container_name: codecon-routing
+    build:
+      context: ../routing
+      dockerfile: Dockerfile
     expose:
       - "8000"
     ports:
       - "8000:8000"
     depends_on:
-      - rabbitmq
+      - codecon-ui
+      - codecon-api
 
 networks:
   default:

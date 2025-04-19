@@ -37,7 +37,7 @@ const events = {
 }
 
 function sendToBackend(data) {
-    const apiUrl = `http://${window.location.hostname}:8000/events`;
+    const apiUrl = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api/events`;
     fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -47,6 +47,10 @@ function sendToBackend(data) {
     }).catch(err => {
         console.error("Erro ao enviar dados:", err);
     });
+}
+
+function generateJoystickFeedback() {
+    navigator.vibrate(10);
 }
 
 function getPosition(e) {
@@ -102,7 +106,7 @@ function resetJoystick() {
     joystick.style.left = "70px";
     joystick.style.top = "70px";
     movementDirection = "stop";
-    navigator.vibrate(5);
+    
 }
 
 direction.addEventListener("mousedown", (e) => {
@@ -115,7 +119,7 @@ direction.addEventListener("mousedown", (e) => {
 
 direction.addEventListener("touchstart", () => {
     resetJoystick();
-    navigator.vibrate(5);
+    generateJoystickFeedback();
 });
 
 buttonShoot.addEventListener("touchstart", () => {
@@ -123,7 +127,7 @@ buttonShoot.addEventListener("touchstart", () => {
         player_id: player_id,
         event: events.shoot
     });
-    navigator.vibrate(5);
+    generateJoystickFeedback();
 });
 
 buttonRotateCW.addEventListener("touchstart", () => {
@@ -131,7 +135,7 @@ buttonRotateCW.addEventListener("touchstart", () => {
         player_id: player_id,
         event: events.rotate.cw
     });
-    navigator.vibrate(5);
+    generateJoystickFeedback();
 });
 
 buttonRotateCCW.addEventListener("touchstart", () => {
@@ -139,7 +143,7 @@ buttonRotateCCW.addEventListener("touchstart", () => {
         player_id: player_id,
         event: events.rotate.ccw
     });
-    navigator.vibrate(5);
+    generateJoystickFeedback();
 });
 
 buttonRotateCW.addEventListener("touchend", () => {
@@ -147,7 +151,7 @@ buttonRotateCW.addEventListener("touchend", () => {
         player_id: player_id,
         event: events.rotate.stop
     });
-    navigator.vibrate(5);
+    generateJoystickFeedback();
 });
 
 buttonRotateCCW.addEventListener("touchend", () => {
@@ -155,7 +159,7 @@ buttonRotateCCW.addEventListener("touchend", () => {
         player_id: player_id,
         event: events.rotate.stop
     });
-    navigator.vibrate(5);
+    generateJoystickFeedback();
 });
 
 direction.addEventListener("touchend", (e) => {
@@ -164,7 +168,7 @@ direction.addEventListener("touchend", (e) => {
         event: events.move.stop
     });
     resetJoystick();
-    navigator.vibrate(5);
+    generateJoystickFeedback();
 });
 
 direction.addEventListener("touchmove", (e) => {

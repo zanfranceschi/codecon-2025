@@ -24,12 +24,6 @@ player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 logos = pygame.sprite.Group()
 shots = pygame.sprite.Group()
 
-lang = sprites.LangLogo(1, "logo-c#", 200, 200, shots)
-lang.angle = 0
-texto = sprites.Text(screen, lang)
-#logos.add(lang)
-#logos.add(texto)
-
 Thread(target = functions.start_emitting_events).start()
 Thread(target = functions.add_random_player).start()
 
@@ -37,7 +31,20 @@ events_daemon.start_async()
 
 bg = pygame.image.load('images/background-01.jpg')
 
-players = []
+class DeathDeclaration(object):
+    def __init__(self):
+        self.live_player_ids = []
+        
+    def is_player_alive(self, player_id):
+        return player_id in self.live_player_ids
+    
+    def add_player(self, player_id):
+        self.live_player_ids.append(player_id)
+    
+    def declare_death(self, player_id):
+        self.live_player_ids.remove(player_id)
+        
+death_declaration = DeathDeclaration()
 
 while True:
     events = pygame.event.get()
@@ -46,12 +53,12 @@ while True:
         if event.type == pygame.WINDOWRESIZED:
             configs.SCREEN_WIDTH, configs.SCREEN_HEIGHT = screen.get_width(), screen.get_height()
         if event.type == pygame.USEREVENT and event.event == configs.USER_EVENT_JOIN and event.lang is not None:
-            if event.player_id not in players:
-                players.append(event.player_id)
+            if event.player_id not in death_declaration.live_player_ids:
+                death_declaration.add_player(event.player_id)
                 x = random.randint(0, configs.SCREEN_WIDTH - 150)
                 y = random.randint(0, configs.SCREEN_HEIGHT - 150)
                 logo_img = f"logo-{event.lang}"
-                lang = sprites.LangLogo(event.player_id, logo_img, x, y, shots)
+                lang = sprites.LangLogo(event.player_id, logo_img, x, y, shots, death_declaration)
                 texto = sprites.Text(screen, lang)
                 logos.add(lang)
                 logos.add(texto)
