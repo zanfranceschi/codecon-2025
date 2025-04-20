@@ -1,10 +1,10 @@
-POST http://localhost:8000/events
+POST http://localhost:8000/api/events
 Content-Type: application/json
 
 {
     "player_id": "fran",
     "event": 20,
-    "lang": "c#"
+    "lang": "csharp"
 }
 
 ###

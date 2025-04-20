@@ -7,7 +7,7 @@ const buttonRotateCCW = document.getElementById("rotate-ccw");
 
 const urlParams = new URLSearchParams(window.location.search);
 const lang = urlParams.get('lang');
-const player_id = urlParams.get('player_id');
+const player_id = lang;
 
 const center = 100;
 const maxDistance = 80;

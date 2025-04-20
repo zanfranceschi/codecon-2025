@@ -3,106 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joystick Controller</title>
+    <title>A Verdadeira Rinha de Backend - Codecon Summit 2025</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
+            padding: 1rem;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
             background-color: #fff;
-            padding: 20px;
+            border-radius: 1rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
-        #joystick-container {
-            width: 200px;
-            height: 200px;
-            background: #eee;
-            border-radius: 50%;
-            position: relative;
-            touch-action: none;
-        }
-
-        #joystick {
-            width: 60px;
-            height: 60px;
-            background: #444;
-            border-radius: 50%;
-            position: absolute;
-            left: 70px;
-            top: 70px;
-            transition: 0.1s;
-        }
-
-        #buttons {
+        .grid-item {
+            background-color: #fff;
+            border-radius: 0.5rem;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-        }
-
-        #vertical-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: -60px;
-        }
-
-        .joy-button {
-            width: 80px;
-            height: 80px;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 50%;
-            background: #ff5252;
-            color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        .joy-button:active {
-            transform: scale(0.9);
-            background: #e53935;
-        }
-
-        .controller-container {
-            display: flex;
-            gap: 40px;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-            width: 100%;
+            padding: 1rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid #eee;
+            aspect-ratio: 1;
         }
 
-        .shoot-container {
-            margin-left: auto;
+        .grid-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-color: #ddd;
         }
 
-        #shoot {
-            width: 100px;
-            height: 100px;
-            position: absolute;
-            right: 30px;
-            top: 30px;
+        .grid-item img {
+            width: 4rem;
+            height: 4rem;
+            object-fit: contain;
+            margin-bottom: 0.5rem;
+        }
+
+        .grid-item span {
+            font-size: 1.5rem;
+            text-align: center;
+            text-transform: capitalize;
+            font-weight: 500;
         }
     </style>
 </head>
-
 <body>
-    <div class="controller-container">
-        <!-- Botões A e B -->
-        <div id="vertical-buttons">
-            <button class="joy-button" id="rotate-cw">↻</button>
-            <button class="joy-button" id="rotate-ccw">↺</button>
-        </div>
-
-        <!-- Joystick -->
-        <div id="joystick-container">
-            <div id="joystick"></div>
-        </div>
-
-        <!-- Botão C -->
-        <div class="shoot-container">
-            <button class="joy-button" id="shoot">✴</button>
-        </div>
+    <div class="grid-container">
+        <a class="grid-item" href="joystick?lang=erlang">
+            <img src="./lang-logos/erlang.png" alt="Erlang">
+            <span>Erlang</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=rust">
+            <img src="./lang-logos/rust.png" alt="Rust">
+            <span>Rust</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=java">
+            <img src="./lang-logos/java.png" alt="Java">
+            <span>Java</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=swift">
+            <img src="./lang-logos/swift.png" alt="Swift">
+            <span>Swift</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=zig">
+            <img src="./lang-logos/zig.png" alt="Zig">
+            <span>Zig</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=python">
+            <img src="./lang-logos/python.png" alt="Python">
+            <span>Python</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=elm">
+            <img src="./lang-logos/elm.png" alt="Elm">
+            <span>Elm</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=clojure">
+            <img src="./lang-logos/clojure.png" alt="Clojure">
+            <span>Clojure</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=ocaml">
+            <img src="./lang-logos/ocaml.png" alt="OCaml">
+            <span>OCaml</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=typescript">
+            <img src="./lang-logos/typescript.png" alt="TypeScript">
+            <span>TypeScript</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=r">
+            <img src="./lang-logos/r.png" alt="R">
+            <span>R</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=scala">
+            <img src="./lang-logos/scala.png" alt="Scala">
+            <span>Scala</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=delphi">
+            <img src="./lang-logos/delphi.png" alt="Delphi">
+            <span>Delphi</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=groovy">
+            <img src="./lang-logos/groovy.png" alt="Groovy">
+            <span>Groovy</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=php">
+            <img src="./lang-logos/php.png" alt="PHP">
+            <span>PHP</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=dart">
+            <img src="./lang-logos/dart.png" alt="Dart">
+            <span>Dart</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=javascript">
+            <img src="./lang-logos/javascript.png" alt="JavaScript">
+            <span>JavaScript</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=csharp">
+            <img src="./lang-logos/csharp.png" alt="C#">
+            <span>C#</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=cpp">
+            <img src="./lang-logos/cpp.png" alt="C++">
+            <span>C++</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=elixir">
+            <img src="./lang-logos/elixir.png" alt="Elixir">
+            <span>Elixir</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=lua">
+            <img src="./lang-logos/lua.png" alt="Lua">
+            <span>Lua</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=go">
+            <img src="./lang-logos/go.png" alt="Go">
+            <span>Go</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=cobol">
+            <img src="./lang-logos/cobol.png" alt="COBOL">
+            <span>COBOL</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=fsharp">
+            <img src="./lang-logos/fsharp.png" alt="F#">
+            <span>F#</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=kotlin">
+            <img src="./lang-logos/kotling.png" alt="Kotlin">
+            <span>Kotlin</span>
+        </a>
+        <a class="grid-item" href="joystick?lang=ruby">
+            <img src="./lang-logos/ruby.png" alt="Ruby">
+            <span>Ruby</span>
+        </a>
     </div>
-
 </body>
-<script src="joystick.js"></script>
-</html>
+</html> 

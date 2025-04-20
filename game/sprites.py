@@ -7,37 +7,37 @@ LOGO_SPACING = 155
 LOGO_SIZE = 150
 
 sprites =  {
-    "logo-ruby":    (LOGO_SPACING * 0, LOGO_SPACING * 0, LOGO_SIZE, LOGO_SIZE),
-    "logo-kotlin":  (LOGO_SPACING * 1, LOGO_SPACING * 0, LOGO_SIZE, LOGO_SIZE),
-    "logo-f#":      (LOGO_SPACING * 2, LOGO_SPACING * 0, LOGO_SIZE, LOGO_SIZE),
-    "logo-cobol":   (LOGO_SPACING * 3, LOGO_SPACING * 0, LOGO_SIZE, LOGO_SIZE),
-    "logo-go":      (LOGO_SPACING * 4, LOGO_SPACING * 0, LOGO_SIZE, LOGO_SIZE),
+    "logo-ruby":       (LOGO_SPACING * 0, LOGO_SPACING * 0, LOGO_SIZE, LOGO_SIZE),
+    "logo-kotlin":     (LOGO_SPACING * 1, LOGO_SPACING * 0, LOGO_SIZE, LOGO_SIZE),
+    "logo-fsharp":     (LOGO_SPACING * 2, LOGO_SPACING * 0, LOGO_SIZE, LOGO_SIZE),
+    "logo-cobol":      (LOGO_SPACING * 3, LOGO_SPACING * 0, LOGO_SIZE, LOGO_SIZE),
+    "logo-go":         (LOGO_SPACING * 4, LOGO_SPACING * 0, LOGO_SIZE, LOGO_SIZE),
 
-    "logo-lua":     (LOGO_SPACING * 0, LOGO_SPACING * 1, LOGO_SIZE, LOGO_SIZE),
-    "logo-elixir":  (LOGO_SPACING * 1, LOGO_SPACING * 1, LOGO_SIZE, LOGO_SIZE),
-    "logo-c++":     (LOGO_SPACING * 2, LOGO_SPACING * 1, LOGO_SIZE, LOGO_SIZE),
-    "logo-c#":      (LOGO_SPACING * 3, LOGO_SPACING * 1, LOGO_SIZE, LOGO_SIZE),
-    "logo-js":      (LOGO_SPACING * 4, LOGO_SPACING * 1, LOGO_SIZE, LOGO_SIZE),
+    "logo-lua":        (LOGO_SPACING * 0, LOGO_SPACING * 1, LOGO_SIZE, LOGO_SIZE),
+    "logo-elixir":     (LOGO_SPACING * 1, LOGO_SPACING * 1, LOGO_SIZE, LOGO_SIZE),
+    "logo-cpp":        (LOGO_SPACING * 2, LOGO_SPACING * 1, LOGO_SIZE, LOGO_SIZE),
+    "logo-csharp":     (LOGO_SPACING * 3, LOGO_SPACING * 1, LOGO_SIZE, LOGO_SIZE),
+    "logo-javascript": (LOGO_SPACING * 4, LOGO_SPACING * 1, LOGO_SIZE, LOGO_SIZE),
 
-    "logo-dart":    (LOGO_SPACING * 0, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
-    "logo-php":     (LOGO_SPACING * 1, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
-    "logo-groovy":  (LOGO_SPACING * 2, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
-    "logo-cobol":   (LOGO_SPACING * 3, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
-    "logo-scala":   (LOGO_SPACING * 4, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
+    "logo-dart":       (LOGO_SPACING * 0, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
+    "logo-php":        (LOGO_SPACING * 1, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
+    "logo-groovy":     (LOGO_SPACING * 2, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
+    "logo-cobol":      (LOGO_SPACING * 3, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
+    "logo-scala":      (LOGO_SPACING * 4, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
 
-    "logo-r":       (LOGO_SPACING * 0, LOGO_SPACING * 3, LOGO_SIZE, LOGO_SIZE),
-    "logo-ts":      (LOGO_SPACING * 1, LOGO_SPACING * 3, LOGO_SIZE, LOGO_SIZE),
-    "logo-ocaml":   (LOGO_SPACING * 2, LOGO_SPACING * 3, LOGO_SIZE, LOGO_SIZE),
-    "logo-clojure": (LOGO_SPACING * 3, LOGO_SPACING * 3, LOGO_SIZE, LOGO_SIZE),
-    "logo-elm":     (LOGO_SPACING * 4, LOGO_SPACING * 3, LOGO_SIZE, LOGO_SIZE),
+    "logo-r":          (LOGO_SPACING * 0, LOGO_SPACING * 3, LOGO_SIZE, LOGO_SIZE),
+    "logo-typescript": (LOGO_SPACING * 1, LOGO_SPACING * 3, LOGO_SIZE, LOGO_SIZE),
+    "logo-ocaml":      (LOGO_SPACING * 2, LOGO_SPACING * 3, LOGO_SIZE, LOGO_SIZE),
+    "logo-clojure":    (LOGO_SPACING * 3, LOGO_SPACING * 3, LOGO_SIZE, LOGO_SIZE),
+    "logo-elm":        (LOGO_SPACING * 4, LOGO_SPACING * 3, LOGO_SIZE, LOGO_SIZE),
 
-    "logo-python":  (LOGO_SPACING * 0, LOGO_SPACING * 4, LOGO_SIZE, LOGO_SIZE),
-    "logo-zig":     (LOGO_SPACING * 1, LOGO_SPACING * 4, LOGO_SIZE, LOGO_SIZE),
-    "logo-swift":   (LOGO_SPACING * 2, LOGO_SPACING * 4, LOGO_SIZE, LOGO_SIZE),
-    "logo-java":    (LOGO_SPACING * 3, LOGO_SPACING * 4, LOGO_SIZE, LOGO_SIZE),
-    "logo-rust":    (LOGO_SPACING * 4, LOGO_SPACING * 4, LOGO_SIZE, LOGO_SIZE),
+    "logo-python":     (LOGO_SPACING * 0, LOGO_SPACING * 4, LOGO_SIZE, LOGO_SIZE),
+    "logo-zig":        (LOGO_SPACING * 1, LOGO_SPACING * 4, LOGO_SIZE, LOGO_SIZE),
+    "logo-swift":      (LOGO_SPACING * 2, LOGO_SPACING * 4, LOGO_SIZE, LOGO_SIZE),
+    "logo-java":       (LOGO_SPACING * 3, LOGO_SPACING * 4, LOGO_SIZE, LOGO_SIZE),
+    "logo-rust":       (LOGO_SPACING * 4, LOGO_SPACING * 4, LOGO_SIZE, LOGO_SIZE),
 
-    "logo-erlang":  (LOGO_SPACING * 0, LOGO_SPACING * 5, LOGO_SIZE, LOGO_SIZE),
+    "logo-erlang":     (LOGO_SPACING * 0, LOGO_SPACING * 5, LOGO_SIZE, LOGO_SIZE),
 }
 
 pygame.freetype.init()

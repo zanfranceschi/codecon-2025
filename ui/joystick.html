@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joystick Controller</title>
+    <style>
+        body {
+            background-color: #fff;
+            padding: 20px;
+        }
+
+        #joystick-container {
+            width: 200px;
+            height: 200px;
+            background: #eee;
+            border-radius: 50%;
+            position: relative;
+            touch-action: none;
+        }
+
+        #joystick {
+            width: 60px;
+            height: 60px;
+            background: #444;
+            border-radius: 50%;
+            position: absolute;
+            left: 70px;
+            top: 70px;
+            transition: 0.1s;
+        }
+
+        #buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #vertical-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: -60px;
+        }
+
+        .joy-button {
+            width: 80px;
+            height: 80px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50%;
+            background: #ff5252;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .joy-button:active {
+            transform: scale(0.9);
+            background: #e53935;
+        }
+
+        .controller-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .shoot-container {
+            margin-left: auto;
+        }
+
+        #shoot {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            right: 30px;
+            top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controller-container">
+        <!-- Botões A e B -->
+        <div id="vertical-buttons">
+            <button class="joy-button" id="rotate-cw">↻</button>
+            <button class="joy-button" id="rotate-ccw">↺</button>
+        </div>
+
+        <!-- Joystick -->
+        <div id="joystick-container">
+            <div id="joystick"></div>
+        </div>
+
+        <!-- Botão C -->
+        <div class="shoot-container">
+            <button class="joy-button" id="shoot">✴</button>
+        </div>
+    </div>
+
+</body>
+<script src="joystick.js"></script>
+</html>
