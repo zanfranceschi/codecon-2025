@@ -57,6 +57,23 @@ services:
       - codecon-ui
       - codecon-api
 
+  codecon-game:
+    image: codecon-game
+    container_name: codecon-game
+    build:
+      context: ../game
+      dockerfile: Dockerfile
+    environment:
+      - DISPLAY=$DISPLAY
+      - RABBITMQ_HOST=codecon-rabbitmq
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASSWORD=guest
+      - RABBITMQ_PORT=5672
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    depends_on:
+      - rabbitmq
+
 networks:
   default:
     driver: bridge

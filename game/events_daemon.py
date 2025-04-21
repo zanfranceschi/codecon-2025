@@ -2,6 +2,7 @@ import pygame
 import pika
 import json
 import logging
+import os
 from threading import Thread
 
 logging.basicConfig(
@@ -11,9 +12,16 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def start_consuming():
-    credentials = pika.PlainCredentials('guest', 'guest')
+    credentials = pika.PlainCredentials(
+        os.getenv('RABBITMQ_USER', 'guest'),
+        os.getenv('RABBITMQ_PASSWORD', 'guest')
+    )
     connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host="127.0.0.100", port=5672, credentials=credentials),
+        pika.ConnectionParameters(
+            host=os.getenv('RABBITMQ_HOST', 'localhost'),
+            port=os.getenv('RABBITMQ_PORT', 5672),
+            credentials=credentials
+        )
     )
 
     exchange_name = "game.events"

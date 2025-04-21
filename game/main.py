@@ -14,7 +14,8 @@ from threading import Thread
 # pygame setup
 pygame.init()
 pygame.display.set_caption('CODECON SUMMIT 2025')
-screen = pygame.display.set_mode((configs.SCREEN_WIDTH, configs.SCREEN_HEIGHT), pygame.locals.RESIZABLE)
+#screen = pygame.display.set_mode((configs.SCREEN_WIDTH, configs.SCREEN_HEIGHT), pygame.locals.RESIZABLE)
+screen = pygame.display.set_mode((configs.SCREEN_WIDTH, configs.SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 running = True
 dt = 0
