@@ -1,5 +1,8 @@
 `nix-shell shell.nix`
 
+disable control access, any host client can connect
+`xhost +`
+
 # Lang Icons
 https://techicons.dev/
 
