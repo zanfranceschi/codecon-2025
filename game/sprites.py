@@ -22,7 +22,7 @@ sprites =  {
     "logo-dart":       (LOGO_SPACING * 0, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
     "logo-php":        (LOGO_SPACING * 1, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
     "logo-groovy":     (LOGO_SPACING * 2, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
-    "logo-cobol":      (LOGO_SPACING * 3, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
+    "logo-delphi":     (LOGO_SPACING * 3, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
     "logo-scala":      (LOGO_SPACING * 4, LOGO_SPACING * 2, LOGO_SIZE, LOGO_SIZE),
 
     "logo-r":          (LOGO_SPACING * 0, LOGO_SPACING * 3, LOGO_SIZE, LOGO_SIZE),
@@ -80,8 +80,12 @@ class Shot(pygame.sprite.Sprite):
         self.rect.y = int(self.y)
 
 class LangLogo(pygame.sprite.Sprite):
+
+    @classmethod
+    def valid_lang(cls, logo):
+        return logo in sprites
     
-    def __init__(self, id, logo, x, y, shots, death_declaration):
+    def __init__(self, id, logo, x, y, angle, shots, death_declaration):
         pygame.sprite.Sprite.__init__(self)
         self.original_image = SpritesSheet().image_at(sprites[logo])
         self.image = self.original_image.copy()
@@ -89,13 +93,14 @@ class LangLogo(pygame.sprite.Sprite):
         self.velocity = 5
         self.shots = shots
         self.hp = 100
-        self.angle = 0
+        self.angle = angle
         self.id = id
         self.is_moving = False
         self.moving_direction = None
         self.is_rotating = False
         self.rotating_direction = None
         self.death_declaration = death_declaration
+        self.rotate()
 
     def update_mask(self):
         self.mask = pygame.mask.from_surface(self.image)
@@ -303,7 +308,7 @@ class LangLogo(pygame.sprite.Sprite):
             for collided_sprite in collided_sprites:
                 if (not collided_sprite.shooter_id == self.id):
                     collided_sprite.kill()
-                    self.hp -= 1
+                    self.hp -= 5
 
 class Text(pygame.sprite.Sprite):
     def __init__(self, screen, logo):

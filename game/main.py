@@ -13,9 +13,9 @@ from threading import Thread
 
 # pygame setup
 pygame.init()
-pygame.display.set_caption('CODECON SUMMIT 2025')
-#screen = pygame.display.set_mode((configs.SCREEN_WIDTH, configs.SCREEN_HEIGHT), pygame.locals.RESIZABLE)
-screen = pygame.display.set_mode((configs.SCREEN_WIDTH, configs.SCREEN_HEIGHT))
+pygame.display.set_caption('A VERDADEIRA RINHA DE BACKEND')
+screen = pygame.display.set_mode((configs.SCREEN_WIDTH, configs.SCREEN_HEIGHT), pygame.locals.RESIZABLE)
+#screen = pygame.display.set_mode((configs.SCREEN_WIDTH, configs.SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 running = True
 dt = 0
@@ -30,7 +30,7 @@ Thread(target = functions.add_random_player).start()
 
 events_daemon.start_async()
 
-bg = pygame.image.load('images/background-01.jpg')
+bg = pygame.image.load('images/background-02.jpg')
 
 class DeathDeclaration(object):
     def __init__(self):
@@ -54,12 +54,13 @@ while True:
         if event.type == pygame.WINDOWRESIZED:
             configs.SCREEN_WIDTH, configs.SCREEN_HEIGHT = screen.get_width(), screen.get_height()
         if event.type == pygame.USEREVENT and event.event == configs.USER_EVENT_JOIN and event.lang is not None:
-            if event.player_id not in death_declaration.live_player_ids:
+            logo_img = f"logo-{event.lang}"
+            if sprites.LangLogo.valid_lang(logo_img) and event.player_id not in death_declaration.live_player_ids:
                 death_declaration.add_player(event.player_id)
                 x = random.randint(0, configs.SCREEN_WIDTH - 150)
                 y = random.randint(0, configs.SCREEN_HEIGHT - 150)
-                logo_img = f"logo-{event.lang}"
-                lang = sprites.LangLogo(event.player_id, logo_img, x, y, shots, death_declaration)
+                angle = random.randint(0, 259)
+                lang = sprites.LangLogo(event.player_id, logo_img, x, y, angle, shots, death_declaration)
                 texto = sprites.Text(screen, lang)
                 logos.add(lang)
                 logos.add(texto)
@@ -90,5 +91,3 @@ while True:
     # limits FPS to 60
     # dt is delta time in seconds since last frame
     dt = clock.tick(60) / 1000
-
-pygame.quit()

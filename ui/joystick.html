@@ -81,28 +81,60 @@
             right: 30px;
             top: 30px;
         }
+
+        .general-control {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            text-align: center;
+        }
+        .general-control button, .general-control a {
+            border: none;
+            border-radius: 5%;
+            background: #325358;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            font-size: 1rem;
+            margin-left: 20px;
+        }
     </style>
 </head>
 
 <body>
     <div class="controller-container">
-        <!-- Botões A e B -->
         <div id="vertical-buttons">
             <button class="joy-button" id="rotate-cw">↻</button>
             <button class="joy-button" id="rotate-ccw">↺</button>
         </div>
 
-        <!-- Joystick -->
         <div id="joystick-container">
             <div id="joystick"></div>
         </div>
 
-        <!-- Botão C -->
         <div class="shoot-container">
             <button class="joy-button" id="shoot">✴</button>
         </div>
     </div>
 
+    <div class="general-control">
+        <button id="button-respawn">respawn</button>
+        <button id="button-tela-inicial">tela inicial</button>
+    </div>
+
 </body>
+<script type="text/javascript">
+    
+    const respawnButton = document.getElementById('button-respawn');
+    const telaInicialButton = document.getElementById('button-tela-inicial');
+
+    respawnButton.addEventListener('click', () => {
+        location.reload();
+    });
+
+    telaInicialButton.addEventListener('click', () => {
+        window.location.href = '/';
+    });
+</script>
 <script src="joystick.js"></script>
 </html>
