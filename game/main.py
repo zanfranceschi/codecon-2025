@@ -60,7 +60,10 @@ while True:
                 x = random.randint(0, configs.SCREEN_WIDTH - 150)
                 y = random.randint(0, configs.SCREEN_HEIGHT - 150)
                 angle = random.randint(0, 259)
-                lang = sprites.LangLogo(event.player_id, logo_img, x, y, angle, shots, death_declaration)
+                if event.lang == "java":
+                    lang = sprites.LangJava(event.player_id, x, y, angle, shots, death_declaration)
+                else:
+                    lang = sprites.LangLogo(event.player_id, logo_img, x, y, angle, shots, death_declaration)
                 texto = sprites.Text(screen, lang)
                 logos.add(lang)
                 logos.add(texto)

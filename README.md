@@ -21,3 +21,11 @@ Start [docker compose](./containerization/docker-compose.yml).
 ```shell
 docker compose up
 ```
+
+
+### Gerar QR Code
+https://qr.io/
+
+```shell
+nix-shell -p qrencode --run "qrencode -t UTF8 https://codecon.zanfranceschi.com.br"
+```

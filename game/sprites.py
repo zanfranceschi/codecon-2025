@@ -310,6 +310,11 @@ class LangLogo(pygame.sprite.Sprite):
                     collided_sprite.kill()
                     self.hp -= 5
 
+class LangJava(LangLogo):
+    def __init__(self, id, x, y, angle, shots, death_declaration):
+        LangLogo.__init__(self, id, "logo-java", x, y, angle, shots, death_declaration)
+        self.velocity = 1
+
 class Text(pygame.sprite.Sprite):
     def __init__(self, screen, logo):
         pygame.sprite.Sprite.__init__(self)
